@@ -5,14 +5,13 @@ import warnings
 from distutils.version import LooseVersion
 import project_tests as tests
 
-print()
 # Check TensorFlow Version
-assert LooseVersion(tf.__version__) >= LooseVersion('1.0'), 'Please use TensorFlow version 1.0 or newer.  You are using {}'.format(tf.__version__)
-print('TensorFlow Version: {}'.format(tf.__version__))
+assert LooseVersion(tf.__version__) >= LooseVersion('1.0'), '\nPlease use TensorFlow version 1.0 or newer.  You are using {}'.format(tf.__version__)
+print('\nTensorFlow Version: {}'.format(tf.__version__))
 
 # Check for a GPU
 if not tf.test.gpu_device_name():
-    warnings.warn('No GPU found. Please use a GPU to train your neural network.')
+    warnings.warn('\nNo GPU found. Please use a GPU to train your neural network.')
 else:
     print('Default GPU Device: {}\n'.format(tf.test.gpu_device_name()))
 
@@ -143,7 +142,7 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
         for image, label in get_batches_fn(batch_size):
             _, loss = sess.run([train_op, cross_entropy_loss],
                                feed_dict={input_image: image, correct_label: label,
-                                          keep_prob: 0.5, learning_rate: 0.0009})
+                                          keep_prob: 0.5, learning_rate: 0.00001})
             print("Loss: = " + str(loss))
 tests.test_train_nn(train_nn)
 
